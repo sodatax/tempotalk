@@ -1,13 +1,9 @@
 {
-  "dependencies": {
-    "ejs": "^4.0.1",
-    "express": "^5.2.1",
-    "nodemon": "^3.1.12"
-  },
   "name": "tempotalk",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,9 +14,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/sodatax/tempotalk/issues"
   },
-  "homepage": "https://github.com/sodatax/tempotalk#readme"
+  "homepage": "https://github.com/sodatax/tempotalk#readme",
+  "dependencies": {
+    "ejs": "^4.0.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
 }
