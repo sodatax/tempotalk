@@ -4,36 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/create.css">
+
 </head>
 <body>
     <h1>TempoTalk</h1>
     <form id="account-creation" action="/create-account">
         <h2>Create an Account</h2>
         <br>
-        <label for="username">Username
+        <label for="username">Username:
             <span class="err" id="err-username">
-                username is required
+                *username is required*
             </span>
         </label>
         <input type="text" id="username" name="username">
         <br>
-        <label for="password">Password
+        <label for="password">Password:
             <span class="err" id="err-password">
-                password is required
+                *password is required*
             </span>
         </label>
         <input type="text" id="password" name="password">
         <br>
-        <label for="confirm">Confirm Password
+        <label for="confirm">Confirm Password:
             <span class="err" id="err-confirm">
-                password is not the same
+                *password is not the same*
             </span>
         </label>
         <input type="text" id="confirm" name="confirm">
         <br>
-        <label for="email">Email
+        <label for="email">Email:
             <span class="err" id="err-email">
-                email is required
+                *email is required*
             </span>
         </label>
         <input type="text" id="email" name="email">
