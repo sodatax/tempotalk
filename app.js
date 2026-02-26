@@ -2,6 +2,7 @@ import express from 'express';
 const app = express();
 
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 //set the view engine
 app.set('view engine', 'ejs');
@@ -14,6 +15,11 @@ app.get('/create-account', (req,res) => {
 
 app.get('/', (req,res) => {
     res.render('home');
+});
+
+app.post('/create-account', (req,res) => {
+    const { username, password, confirm, email } = req.body;
+    res.render('created', { name: username });
 });
 
 app.listen(PORT, () =>{
