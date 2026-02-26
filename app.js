@@ -8,11 +8,11 @@ app.set('view engine', 'ejs');
 
 const PORT = 3004;
 
-app.get('/', (req,res) => {
+app.get('/create-account', (req,res) => {
     res.render('create');
 });
 
-app.get('/create-account', (req,res) => {
+app.get('/', (req,res) => {
     res.render('home');
 });
 
