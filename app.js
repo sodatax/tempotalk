@@ -9,20 +9,14 @@ app.set('view engine', 'ejs');
 
 const PORT = 3004;
 
-app.get('/create-account', (req,res) => {
-    res.render('create-account');
-});
-
+/*========= Home Page Routes ============*/
 app.get('/', (req,res) => {
     res.render('home-new');
 });
 
-app.get('/settings', (req, res) => {
-    const currentUser = {
-        username: "TempoTalkUser",
-        email: "user@example.com"
-    };
-    res.render('settings', { user: currentUser });
+/*========= Account Routes ============*/
+app.get('/create-account', (req,res) => {
+    res.render('create-account');
 });
 
 app.post('/create-account', (req, res) => {
@@ -33,6 +27,15 @@ app.post('/create-account', (req, res) => {
 app.post('/login-account', (req, res) => {
     const { username, password, timestamp = new Date() } = req.body; 
     res.render('home-user', { name: username });
+});
+
+/*========= Settings Routes ============*/
+app.get('/settings', (req, res) => {
+    const currentUser = {
+        username: "TempoTalkUser",
+        email: "user@example.com"
+    };
+    res.render('settings', { user: currentUser });
 });
 
 app.post('/update-settings', (req, res) => {
@@ -53,6 +56,7 @@ app.post('/delete-account', (req, res) => {
     res.redirect('/'); 
 });
 
+/*========= Listener ============*/
 app.listen(PORT, () =>{
     console.log(`Server is running on port http://localhost:${PORT}`);
 })
