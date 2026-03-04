@@ -14,14 +14,18 @@ app.get('/', (req,res) => {
     res.render('home-new');
 });
 
+app.post('/user-home', (req, res) => {
+    const { username, password, confirm, email, timestamp = new Date() } = req.body;
+    res.render('home-user', { name: username });
+});
+
 /*========= Account Routes ============*/
 app.get('/create-account', (req,res) => {
     res.render('create-account');
 });
 
-app.post('/create-account', (req, res) => {
-    const { username, password, confirm, email, timestamp = new Date() } = req.body;
-    res.render('home-user', { name: username });
+app.get('/login', (req,res) => {
+    res.render('login');
 });
 
 app.post('/login-account', (req, res) => {

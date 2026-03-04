@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Placeholder</title>
 
-    <link rel="stylesheet" href="styles/create.css">
-    <link rel="stylesheet" href="styles/general.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/create.css">
+    <link rel="stylesheet" href="/css/general.css">
+
+    <!-- Scripts -->
+    <script src="js/login.js" defer></script>
+    
 </head>
 <body>
     <!-- logo -->
@@ -18,8 +23,7 @@
 
     <!-- content -->
     <form id="account-creation" action="/login-account" method="POST">
-        <h2>Welcome to TempoTalk</h2>
-        <h3>Log in to your account</h3>
+        <h2>Log in to your account</h2>
         <br>
         <label for="username">Username:
             <span class="err" id="err-username">
@@ -39,6 +43,5 @@
         <br>
         <a href="/create-account">Don't have an account? Click here</a>
     </form>
-    <script src="js/login.js"></script>
 </body>
 </html>
