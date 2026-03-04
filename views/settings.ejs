@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings - TempoTalk</title>
+    <link rel="stylesheet" href="/css/settings.css">
+</head>
+<body>
+    <div class="crop-logo">
+        <a href="/">
+            <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
+        </a>
+    </div>
+
+    <main>
+        <form id="account-creation" action="/update-settings" method="POST">
+            <h2>Account Settings</h2>
+
+            <label for="username">Display Name:</label>
+            <input type="text" id="username" name="username" 
+                    class="editable-info" onfocus="this.select()" placeholder="User">
+
+            <br>
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" 
+                    class="editable-info" onfocus="this.select()" placeholder="E-Mail">
+
+            <br>
+            <label for="password">New Password:</label>
+            <input type="password" id="password" name="password" placeholder="Leave blank to keep current/ password">
+
+            <br>
+            <button type="submit">Update Profile</button>
+        </form>
+
+        <div class="subtle-delete">
+            <form action="/delete-account" method="POST" onsubmit="return confirm('Are you sure? This will permanently delete your TempoTalk account.');">
+                <button type="submit" class="delete-link">Delete Account</button>
+            </form>
+        </div>
+
+        <p style="text-align: center; margin-top: 20px;">
+            <a href="/">← Back to Home</a>
+        </p>
+    </main>
+</body>
+</html>
