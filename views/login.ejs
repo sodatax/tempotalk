@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placeholder</title>
+
+    <link rel="stylesheet" href="styles/create.css">
+    <link rel="stylesheet" href="styles/general.css">
+</head>
+<body>
+    <!-- logo -->
+    <div class="crop-logo">
+        <a href="/">
+            <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
+        </a>
+    </div>
+
+    <!-- content -->
+    <form id="account-creation" action="/login-account" method="POST">
+        <h2>Welcome to TempoTalk</h2>
+        <h3>Log in to your account</h3>
+        <br>
+        <label for="username">Username:
+            <span class="err" id="err-username">
+                *username is required*
+            </span>
+        </label>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="password">Password:
+            <span class="err" id="err-password">
+                *password is required*
+            </span>
+        </label>
+        <input type="password" id="password" name="password">
+        <br>
+        <button type="submit">Log In</button>
+        <br>
+        <a href="/create-account">Don't have an account? Click here</a>
+    </form>
+    <script src="js/tempo.js"></script>
+</body>
+</html>
