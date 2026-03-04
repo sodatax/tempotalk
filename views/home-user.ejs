@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Success!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempoTalk</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="/css/general.css">
@@ -12,7 +13,7 @@
 <body>
 
     <div class="layout-container">
-        <div class="column">
+        <div class="column" id="column-left">
             <!-- logo -->
             <div class="crop-logo">
                 <a href="/">
@@ -29,9 +30,10 @@
 
         <div class="column" id="column-right">
             <div>
-                <a href="/create-account">Log In</a>
-                <a href="/create-account">/ Create Account</a>
-                <a href="/settings">/ Account Settings</a>
+                <ul>
+                    <li><a href="/settings"><strong><%= name %></strong></a></li>
+                    <li><a href="/settings">Account Settings</a></li>
+                </ul>
             </div>
         </div>
     </div>

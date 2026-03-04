@@ -3,8 +3,13 @@ nav{
     justify-content: start;
 }
 
+li{
+    list-style: none;
+}
+
 /* column styles */
 #column-left{
+    background-color: #c1c1c1;
     display: flex;
     justify-content: baseline;
 }
@@ -17,6 +22,8 @@ nav{
 }
 
 #column-right{
+    background-color: #c1c1c1;
     display: flex;
     justify-content: end;
+    padding:2rem;
 }
