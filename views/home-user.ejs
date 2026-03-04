@@ -3,17 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Success!</title>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/home.css">
+
 </head>
 <body>
-    <div class="crop-logo">
-    <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
 
+    <div class="layout-container">
+        <div class="column">
+            <!-- logo -->
+            <div class="crop-logo">
+                <a href="/">
+                    <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
+                </a>
+            </div>
+        </div>
+
+        <div class="column" id="column-middle">
+            <!-- content -->
+            <h1>Account Created!</h1>
+            <p>Welcome to the club, <strong><%= name %></strong>.</p>
+        </div>
+
+        <div class="column" id="column-right">
+            <div>
+                <a href="/create-account">Log In</a>
+                <a href="/create-account">/ Create Account</a>
+                <a href="/settings">/ Account Settings</a>
+            </div>
+        </div>
     </div>
-
-    <h1>Account Created!</h1>
-    <p>Welcome to the club, <strong><%= name %></strong>.</p>
-    <a href="/">Return Home</a>
-    <a href="/settings">Go to Account Settings</a>
 </body>
 </html>

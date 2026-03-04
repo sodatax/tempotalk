@@ -25,8 +25,13 @@ app.get('/settings', (req, res) => {
     res.render('settings', { user: currentUser });
 });
 
-app.post('/create-account', (req,res) => {
-    const { username, password, confirm, email } = req.body;
+app.post('/create-account', (req, res) => {
+    const { username, password, confirm, email, timestamp = new Date() } = req.body;
+    res.render('home-user', { name: username });
+});
+
+app.post('/login-account', (req, res) => {
+    const { username, password, timestamp = new Date() } = req.body; 
     res.render('home-user', { name: username });
 });
 
