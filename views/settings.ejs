@@ -10,11 +10,15 @@
     <link rel="stylesheet" href="/css/general.css">
 </head>
 <body>
-    <div class="crop-logo">
-        <a href="/">
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/" class="crop-logo">
             <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
         </a>
-    </div>
+        <div id="nav-right">
+            <a href="/settings"><strong><%= user %></strong></a>
+        </div>
+    </nav>
 
     <main class="settings-card">
     <h2>Account Settings</h2>
@@ -46,12 +50,5 @@
         </form>
     </div>
     </main>
-    <div class="column">
-        <div>
-            <a href="/login">Log In</a>
-            <a href="/create-account">Create Account</a>
-            <a href="/settings">Account Settings</a>
-        </div>
-    </div>
 </body>
 </html>

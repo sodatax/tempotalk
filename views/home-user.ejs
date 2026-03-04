@@ -11,25 +11,28 @@
 
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/" class="crop-logo">
+            <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
+        </a>
+        <div id="nav-right">
+            <a href="/settings"><strong><%= name %></strong></a>
+        </div>
+    </nav>
+    
     <div class="layout-container">
         <div class="column" id="column-left">
-            <!-- logo -->
-            <div class="crop-logo">
-                <a href="/">
-                    <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
-                </a>
-            </div>
+
         </div>
 
         <div class="column" id="column-middle">
-            <!-- content -->
             <p>Content</p>
         </div>
 
         <div class="column" id="column-right">
-            <a href="/settings"><strong><%= name %></strong></a>
             <a href="/settings">Account Settings</a>
-            <a href="/">Log Out</a>
+            <a href="/" class="bottom-right">Log Out</a>
         </div>
     </div>
 </body>

@@ -37,10 +37,3 @@ button{
 button:hover{
     background-color: #ffac30;
 }
-
-/* client-side validation */
-.err{
-    color: darkred;
-    display: none;
-    font-style: italic;
-}
