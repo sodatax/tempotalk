@@ -17,9 +17,35 @@ app.get('/', (req,res) => {
     res.render('home');
 });
 
+app.get('/settings', (req, res) => {
+    const currentUser = {
+        username: "TempoTalkUser",
+        email: "user@example.com"
+    };
+    res.render('settings', { user: currentUser });
+});
+
 app.post('/create-account', (req,res) => {
     const { username, password, confirm, email } = req.body;
     res.render('created', { name: username });
+});
+
+app.post('/update-settings', (req, res) => {
+    const { username, email, password } = req.body;
+
+    if (password) {
+        console.log(`Updating Name to: ${username}, Email to: ${email}, and setting a NEW password.`);
+    } else {
+        console.log(`Updating Name to: ${username}, Email to: ${email}, keeping OLD password.`);
+    }
+
+    res.redirect('/'); 
+});
+
+app.post('/delete-account', (req, res) => {
+    console.log("Account deletion request received.");
+
+    res.redirect('/'); 
 });
 
 app.listen(PORT, () =>{
