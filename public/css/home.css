@@ -8,6 +8,10 @@ li{
 }
 
 /* column styles */
+.column{
+    min-height: 100vh;
+}
+
 #column-left{
     background-color: #c1c1c1;
     display: flex;
@@ -18,12 +22,13 @@ li{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    padding: 2rem;
 }
 
 #column-right{
     background-color: #c1c1c1;
     display: flex;
-    justify-content: end;
-    padding:2rem;
+    flex-direction: column;
+    align-items: end;
+    padding: 2rem;
 }

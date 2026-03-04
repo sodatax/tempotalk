@@ -15,7 +15,7 @@
         <div class="column" id="column-left">
             <!-- logo -->
             <div class="crop-logo">
-                <a action="/" method="POST" href="/user-home">
+                <a href="/">
                     <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
                 </a>
             </div>
@@ -27,12 +27,9 @@
         </div>
 
         <div class="column" id="column-right">
-            <div>
-                <ul>
-                    <li><a href="/settings"><strong><%= name %></strong></a></li>
-                    <li><a href="/settings">Account Settings</a></li>
-                </ul>
-            </div>
+            <a href="/settings"><strong><%= name %></strong></a>
+            <a href="/settings">Account Settings</a>
+            <a href="/">Log Out</a>
         </div>
     </div>
 </body>

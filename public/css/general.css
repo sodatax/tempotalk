@@ -8,6 +8,10 @@ body {
     font-family:Arial, Helvetica, sans-serif;
 }
 
+nav{
+    background: white;
+}
+
 .layout-container{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
