@@ -10,16 +10,16 @@ app.set('view engine', 'ejs');
 const PORT = 3004;
 
 app.get('/create-account', (req,res) => {
-    res.render('create');
+    res.render('create-account');
 });
 
 app.get('/', (req,res) => {
-    res.render('home');
+    res.render('home-new');
 });
 
 app.post('/create-account', (req,res) => {
     const { username, password, confirm, email } = req.body;
-    res.render('created', { name: username });
+    res.render('home-user', { name: username });
 });
 
 app.listen(PORT, () =>{
