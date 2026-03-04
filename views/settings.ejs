@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Settings - TempoTalk</title>
     <link rel="stylesheet" href="/css/settings.css">
+    <link rel="stylesheet" href="/css/general.css">
 </head>
 <body>
     <div class="crop-logo">
@@ -13,36 +14,42 @@
         </a>
     </div>
 
-    <main>
-        <form id="account-creation" action="/update-settings" method="POST">
-            <h2>Account Settings</h2>
-
-            <label for="username">Display Name:</label>
-            <input type="text" id="username" name="username" 
-                    class="editable-info" onfocus="this.select()" placeholder="User">
-
-            <br>
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" 
-                    class="editable-info" onfocus="this.select()" placeholder="E-Mail">
-
-            <br>
-            <label for="password">New Password:</label>
-            <input type="password" id="password" name="password" placeholder="Leave blank to keep current/ password">
-
-            <br>
-            <button type="submit">Update Profile</button>
-        </form>
-
-        <div class="subtle-delete">
-            <form action="/delete-account" method="POST">
-                <button type="submit" class="delete-link">Delete Account</button>
-            </form>
+    <main class="settings-card">
+    <h2>Account Settings</h2>
+    
+    <form action="/update-settings" method="POST">
+        <div class="input-group">
+            <label for="username">Name</label>
+            <input type="text" id="username" name="username" placeholder="User" onfocus="this.select()">
         </div>
 
-        <p style="text-align: center; margin-top: 20px;">
-            <a href="/">← Back to Home</a>
-        </p>
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email" onfocus="this.select()">
+        </div>
+
+        <div class="input-group">
+            <label for="password">New Password</label>
+            <input type="password" id="password" name="password" placeholder="Password">
+        </div>
+
+        <button type="submit" class="btn-update">Save Changes</button>
+    </form>
+
+    <div class="danger-zone" style="margin-top: 25px; text-align: center; border-top: 1px solid #444; padding-top: 15px;">
+        <form action="/delete-account" method="POST" onsubmit="return confirm('Delete account permanently?')">
+            <button type="submit" class="delete-link" style="background: none; border: none; color: #777; text-decoration: underline; cursor: pointer; font-size: 0.8rem;">
+                Delete Account
+            </button>
+        </form>
+    </div>
     </main>
+    <div class="column">
+            <div>
+                <a href="/create-account">Log In</a>
+                <a href="/create-account">/ Create Account</a>
+                <a href="/settings">/ Account Settings</a>
+            </div>
+    </div>
 </body>
 </html>
