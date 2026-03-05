@@ -4,7 +4,7 @@
 }
 
 body {
-    background: #545454;
+    background: #292929;
     font-family:Arial, Helvetica, sans-serif;
 }
 
@@ -19,8 +19,9 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    background: #1a1a1a;
     max-height: 100px;
+    border-bottom: 1px solid rgb(116, 116, 116);
 }
 
 #nav-right{
@@ -34,10 +35,11 @@ nav{
 .layout-container{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    color:white;
 }
 
 a{
-    color: black;
+    color: white;
     text-decoration: none;
 }
 

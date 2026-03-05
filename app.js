@@ -9,6 +9,8 @@ app.set('view engine', 'ejs');
 
 const PORT = 3004;
 
+/*========= Variables =========*/
+
 /*========= Home Page Routes ============*/
 app.get('/', (req,res) => {
     res.render('home-new');
