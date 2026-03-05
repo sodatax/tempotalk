@@ -31,11 +31,11 @@
         <% } %> 
     </p>
     <p>Email Address: <%= userInfo.email %> </p>
-    <p>Timestamp: <%= userInfo.timestamp.toLocaleString() %></p>
+    <p>Account Created: <%= userInfo.timestamp.toLocaleString() %></p>
 
     <h3>Change Your Info</h3>
 
-    <form action="/update-settings" method="POST">
+    <form id="account-creation" action="/update-settings" method="POST">
         <div class="input-group">
             <label for="username">Name</label>
             <input type="text" id="username" name="username" placeholder="User" onfocus="this.select()">

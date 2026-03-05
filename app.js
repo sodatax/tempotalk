@@ -11,6 +11,7 @@ const PORT = 3004;
 
 /*========= Variables =========*/
 const users = [];
+let currentUser= null;
 
 /*========= Home Page Routes ============*/
 app.get('/', (req,res) => {
@@ -28,6 +29,7 @@ app.post('/home-user', (req, res) => {
     };
 
     users.push(userInfo);
+    currentUser=userInfo;
 
     res.render('home-user', { userInfo });
 });
@@ -58,16 +60,44 @@ app.get('/settings', (req, res) => {
     res.render('settings', { userInfo });
 });
 
-app.post('/update-settings', (req, res) => {
-    const { username, email, password } = req.body;
+// app.post('/update-settings', (req, res) => {
+//     const { username, email, password } = req.body;
 
-    if (password) {
-        console.log(`Updating Name to: ${username}, Email to: ${email}, and setting a NEW password.`);
-    } else {
-        console.log(`Updating Name to: ${username}, Email to: ${email}, keeping OLD password.`);
+//     if (password) {
+//         console.log(`Updating Name to: ${username}, Email to: ${email}, and setting a NEW password.`);
+//     } else {
+//         console.log(`Updating Name to: ${username}, Email to: ${email}, keeping OLD password.`);
+//     }
+
+//     res.redirect('/settings', {userInfo}); 
+// });
+
+app.post('/update-settings', (req, res) => {
+    if (!currentUser) {
+        return res.redirect('/login');
     }
 
-    res.redirect('/settings'); 
+    const { username, email, password } = req.body;
+
+    // update only if field was filled in
+    if (username && username.trim() !== "") {
+        currentUser.username = username;
+    }
+
+    if (email && email.trim() !== "") {
+        currentUser.email = email;
+    }
+
+    if (password && password.trim() !== "") {
+        currentUser.password = password;
+    }
+
+    // update timestamp
+    currentUser.timestamp = new Date();
+
+    console.log("Updated user:", currentUser);
+
+    res.redirect('/settings');
 });
 
 app.post('/delete-account', (req, res) => {
