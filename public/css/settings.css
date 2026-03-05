@@ -20,6 +20,22 @@ body {
     letter-spacing: 0.5px;
 }
 
+.settings-card h3 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.settings-card p {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
 /* IMPORTANT: This pushes your card down so the logo doesn't cover your text */
 .settings-card {
     margin-top: 120px !important; 

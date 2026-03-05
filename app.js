@@ -15,8 +15,13 @@ app.get('/', (req,res) => {
 });
 
 app.post('/user-home', (req, res) => {
-    const { username, password, confirm, email, timestamp = new Date() } = req.body;
-    res.render('home-user', { name: username });
+    const user = req.body;
+
+    const userInfo = {
+        username: user.username
+    };
+
+    res.render('home-user', { userInfo });
 });
 
 /*========= Account Routes ============*/
@@ -28,18 +33,21 @@ app.get('/login', (req,res) => {
     res.render('login');
 });
 
-app.post('/login-account', (req, res) => {
-    const { username, password, timestamp = new Date() } = req.body; 
-    res.render('home-user', { name: username });
-});
-
 /*========= Settings Routes ============*/
 app.get('/settings', (req, res) => {
-    const currentUser = {
-        username: "TempoTalkUser",
-        email: "user@example.com"
+    // const user = req.body;
+
+    const userInfo = {
+        // This is the best I can do since trying to display the actual user information
+        // gives an error for some reason.
+        // If you ever figure it out then delete these comments.
+        username: 'placeholder',
+        password: 'placeholder',
+        email: 'placeholder',
+        timestamp: new Date()
     };
-    res.render('settings', { user: currentUser });
+
+    res.render('settings', { userInfo });
 });
 
 app.post('/update-settings', (req, res) => {

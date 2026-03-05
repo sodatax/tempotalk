@@ -16,13 +16,25 @@
             <img src="/images/tempotalk_logo.png" alt="tempotalk logo" id="logo">
         </a>
         <div id="nav-right">
-            <a href="/settings"><strong><%= user %></strong></a>
+            <a href="/settings"><strong>placeholder</strong></a>
         </div>
     </nav>
 
     <main class="settings-card">
     <h2>Account Settings</h2>
-    
+
+    <h3>Current User Information</h3>
+    <p>Username: <%= userInfo.username %> </p>
+    <p>Password: 
+        <% for (let i = 0; i < userInfo.password.length; i++) { %>
+        <%= "*" %>
+        <% } %> 
+    </p>
+    <p>Email Address: <%= userInfo.email %> </p>
+    <p>Timestamp: <%= userInfo.timestamp.toLocaleString() %></p>
+
+    <h3>Change Your Info</h3>
+
     <form action="/update-settings" method="POST">
         <div class="input-group">
             <label for="username">Name</label>
