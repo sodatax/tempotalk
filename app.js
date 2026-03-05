@@ -10,19 +10,35 @@ app.set('view engine', 'ejs');
 const PORT = 3004;
 
 /*========= Variables =========*/
+const users = [];
 
 /*========= Home Page Routes ============*/
 app.get('/', (req,res) => {
     res.render('home-new');
 });
 
-app.post('/user-home', (req, res) => {
-    const user = req.body;
+app.post('/home-user', (req, res) => {
+    const {username, password, email} = req.body;
 
     const userInfo = {
-        username: user.username
+        username,
+        password,
+        email,
+        timestamp: new Date()
     };
 
+    users.push(userInfo);
+
+    res.render('home-user', { userInfo });
+});
+
+//assumes one user, will change when we use database
+app.get('/home-user', (req, res) => { 
+    if (users.length === 0) {
+        return res.redirect('/');
+    }
+
+    const userInfo = users[users.length - 1];
     res.render('home-user', { userInfo });
 });
 
@@ -37,17 +53,7 @@ app.get('/login', (req,res) => {
 
 /*========= Settings Routes ============*/
 app.get('/settings', (req, res) => {
-    // const user = req.body;
-
-    const userInfo = {
-        // This is the best I can do since trying to display the actual user information
-        // gives an error for some reason.
-        // If you ever figure it out then delete these comments.
-        username: 'placeholder',
-        password: 'placeholder',
-        email: 'placeholder',
-        timestamp: new Date()
-    };
+    const userInfo = users[users.length -1];
 
     res.render('settings', { userInfo });
 });
@@ -61,7 +67,7 @@ app.post('/update-settings', (req, res) => {
         console.log(`Updating Name to: ${username}, Email to: ${email}, keeping OLD password.`);
     }
 
-    res.redirect('/'); 
+    res.redirect('/settings'); 
 });
 
 app.post('/delete-account', (req, res) => {

@@ -12,11 +12,11 @@
 <body>
     <!-- Navigation Bar -->
     <nav>
-        <a href="/" class="crop-logo">
+        <a href="/home-user" class="crop-logo">
             <img src="/images/tempotalk_logo_white.png" alt="tempotalk logo" id="logo">
         </a>
         <div id="nav-right">
-            <a href="/settings"><strong>placeholder</strong></a>
+            <a href="/settings"><strong> <%= userInfo.username %></strong></a>
         </div>
     </nav>
 
@@ -54,9 +54,9 @@
         <button type="submit" class="btn-update">Save Changes</button>
     </form>
 
-    <div class="danger-zone" style="margin-top: 25px; text-align: center; border-top: 1px solid #444; padding-top: 15px;">
+    <div class="danger-zone">
         <form action="/delete-account" method="POST" onsubmit="return confirm('Delete account permanently?')">
-            <button type="submit" class="delete-link" style="background: none; border: none; color: #777; text-decoration: underline; cursor: pointer; font-size: 0.8rem;">
+            <button type="submit" class="delete-link">
                 Delete Account
             </button>
         </form>
