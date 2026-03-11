@@ -88,6 +88,7 @@ app.post('/login', async (req, res) => {
 
         if (rows.length > 0) {
             const userInfo = rows[0];
+            currentUser = userInfo;
             res.render('home-user', { userInfo });
         } else {
             res.redirect('/login?error=true');
@@ -171,11 +172,60 @@ app.post('/delete-account', (req, res) => {
 
 /*========= Posts Route ============*/
 app.get('/create-post', (req,res) => {
-    res.render('create-post');
+    if (!currentUser) {
+        return res.redirect('/login');
+    }
+
+    res.render('create-post', { userInfo: currentUser });
 });
 
-app.get('/post', (req,res) => {
-    res.render('view-post');
+app.post('/in-post', async (req, res) => {
+    try {
+        if (!currentUser) {
+            return res.redirect('/login');
+        }
+
+        const { title, link } = req.body;
+        const content = req.body["body-text"];
+        const user_id = currentUser.id;
+
+        const sql = `INSERT INTO posts (user_id, title, content, links) VALUES (?, ?, ?, ?)`;
+        const [result] = await pool.execute(sql, [user_id, title, content, link]);
+
+        const postId = result.insertId;
+
+        res.redirect(`/home-user/${currentUser.username}`);
+
+    } catch (err) {
+        console.error('Database Error:', err);
+        res.status(500).send('Error creating post in database');
+    }
+});
+
+app.get('/post/:id', async (req, res) => {
+    try {
+
+        const postId = req.params.id;
+        const sql = `
+            SELECT posts.*, users.username
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            WHERE posts.id = ?
+        `;
+
+        const [rows] = await pool.query(sql, [postId]);
+        const post = rows[0];
+
+        if (!post) {
+            return res.send("Post not found");
+        }
+
+        res.render('view-post', { post, userInfo: currentUser });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error loading post");
+    }
 });
 
 /*========= Listener ============*/

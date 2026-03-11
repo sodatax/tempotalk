@@ -8,43 +8,49 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/css/general.css">
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/create-post.css">
+    <link rel="stylesheet" href="/css/post-create.css">
     <link rel="icon" type="image/png" href="/images/tempotalk_logo_white.png">
 
+    <!-- Scripts -->
+    <script src="/js/create-post.js" defer></script>
 </head>
 <body>
     <!-- Navigation Bar -->
-    <%- include('partials/nav-new')%>
+    <%- include('partials/nav-user', { userInfo: userInfo }) %>
     
     <div class="layout-container">
         <div class="column" id="column-left">
-
+            <a href="/home-user/<%= userInfo.username %>">< Back</a>
         </div>
 
         <div class="column" id="column-middle">
-            <form id="create-post" action="#">
-                <label for="title">Title:</label>
-                <input type="text" placeholder="Title...">
+            <form id="create-post-form" action="/in-post" method="POST">
+                <label for="title">Title:
+                    <span class="err" id="err-title">
+                        *title is required*
+                    </span>
+                </label>
+                <input type="text" id="title" name="title" placeholder="Title...">
                 <br>
-
-                <label for="tag">Tag:</label>
-                <select>
+                <!-- <label for="tag">Tag:</label>
+                <select id="tag" name="tag">
                     <option value="none">Select a Tag</option>
                     <option value="music-sharing">Music Sharing</option>
                     <option value="my-music">My Music</option>
                     <option value="discussion">Discussion</option>
                 </select>
+                <br> -->
+                <label for="body-text">Body Text:
+                    <span class="err" id="err-body">
+                        *body text is required*
+                    </span>
+                </label>
+                <textarea id="body-text" name="body-text" rows="8" placeholder="Body Text..."></textarea>
                 <br>
-
-                <label for="body-text">Body Text:</label>
-                <textarea id="body-text" rows="8" placeholder="Body Text..."></textarea>
-                <br>
-
                 <!-- Will make this link potentially pull from an API for a music player -->
                 <label for="link">Music Link:</label>
-                <input type="text">
+                <input type="text" id="link" name="link">
                 <br>
-
                 <button type="submit">Create Post</button>
             </form>
         </div>

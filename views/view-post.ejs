@@ -19,14 +19,25 @@
 
     <div class="layout-container">
         <div class="column" id="column-left">
-
+            <a href="/home-user/<%= userInfo.username %>">< Back</a>
         </div>
 
-        <div class="column" id="column-middle">
-            <!-- content -->
-            <h1>This is for clicking on a post</h1>
-
-        </div>
+    <div class="column" id="column-middle">
+        <h1><%= post.title %></h1>
+        <p>
+            Posted by <strong><%= post.username %></strong>
+            • <%= new Date(post.created_at).toLocaleString() %>
+        </p>
+        <p><%= post.content %></p>
+        <% if (post.links) { %>
+            <p>
+                Link:
+                <a href="<%= post.links %>" target="_blank">
+                    <%= post.links %>
+                </a>
+            </p>
+        <% } %>
+    </div>
 
         <div class="column" id="column-right">
             <div>
