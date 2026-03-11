@@ -169,6 +169,15 @@ app.post('/delete-account', (req, res) => {
     res.redirect('/'); 
 });
 
+/*========= Posts Route ============*/
+app.get('/create-post', (req,res) => {
+    res.render('create-post');
+});
+
+app.get('/post', (req,res) => {
+    res.render('view-post');
+});
+
 /*========= Listener ============*/
 app.listen(PORT, () =>{
     console.log(`Server is running on port http://localhost:${PORT}`);

@@ -3,15 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Post</title>
+    <title>TempoTalk</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/home.css">
     <link rel="icon" type="image/png" href="/images/tempotalk_logo_white.png">
 
-    <!-- Scripts -->
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <%- include('partials/nav-new')%>
     
+    <div class="layout-container">
+        <div class="column" id="column-left">
+
+        </div>
+
+        <div class="column" id="column-middle">
+            <form id="create-post" action="#">
+                <label for="title">Title:</label>
+                <input type="text">
+
+                <label for="tag">Tag:</label>
+                <select>
+                    <option value="none">Select a Tag</option>
+                    <option value="music-sharing">Music Sharing</option>
+                    <option value="my-music">My Music</option>
+                    <option value="discussion">Discussion</option>
+                </select>
+
+                <label for="body_text">Body Text:</label>
+                <input type="textarea">
+
+                <label for="link">Links:</label>
+                <input type="text">
+
+                <button type="submit">Create Post</button>
+            </form>
+        </div>
+
+        <div class="column" id="column-right">
+        </div>
+    </div>
 </body>
 </html>
