@@ -8,18 +8,27 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/css/general.css">
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/post.css">
     <link rel="icon" type="image/png" href="/images/tempotalk_logo_white.png">
 
 </head>
 <body>
     <!-- Navigation Bar -->
-    <%- include('partials/nav-new') %>
+    <% if (!userInfo) { %>
+        <%- include('partials/nav-new') %>
+    <% } else { %>
+        <%- include('partials/nav-user') %>
+    <% } %>
 
     <!-- NOTE: MAKE NAV IF STATEMENT FOR NAV BAR > if(user) then nav-user, else nav-new -->
 
     <div class="layout-container">
         <div class="column" id="column-left">
-            <a href="/home-user/<%= userInfo.username %>">< Back</a>
+            <% if (userInfo) { %>
+                <a href="/home-user/<%= userInfo.username %>">&lt; Back</a>
+            <% } else { %>
+                <a href="/">&lt; Back</a>
+            <% } %>
         </div>
 
     <div class="column" id="column-middle">

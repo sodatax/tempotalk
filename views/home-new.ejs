@@ -26,6 +26,15 @@
             <h1>Welcome to TempoTalk!</h1>
             <p>Where fellow music artists can share anything music-related in blog posts</p>
             <!-- <h1>Please log in or create an account to get started!</h1> -->
+
+            <div class="posts">
+                <% posts.forEach(post => { %>
+                    <a href="/post/<%= post.id %>" class="post-card">
+                        <h3><%= post.title %></h3>
+                        <p class="post-user"><%= post.username %></p>
+                    </a>
+                <% }) %>
+            </div>
         </div>
 
         <div class="column" id="column-right">

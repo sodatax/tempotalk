@@ -25,6 +25,20 @@
             <p>Where fellow music artists can share anything music-related in blog posts</p>
             <!-- <h1>Have fun!</h1> -->
             <!-- <p>Content</p> -->
+
+            <div class="posts">
+                <% if (posts && posts.length > 0) { %>
+                    <% posts.forEach(post => { %>
+                        <a href="/post/<%= post.id %>" class="post-card">
+                            <h3><%= post.title %></h3>
+                            <p class="post-user"><%= post.username %></p>
+                        </a>
+                    <% }) %>
+
+                <% } else { %>
+                    <p></p>
+                <% } %>
+            </div>
         </div>
 
         <div class="column" id="column-right">

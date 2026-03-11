@@ -37,8 +37,22 @@ app.get('/db-test', async (req, res) => {
 let currentUser= null;
 
 /*========= Home Page Routes ============*/
-app.get('/', (req,res) => {
-    res.render('home-new');
+app.get('/', async (req, res) => {
+    try {
+        const sql = `
+            SELECT posts.id, posts.title, users.username
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            ORDER BY posts.created_at DESC`;
+
+        const [posts] = await pool.query(sql);
+
+        res.render('home-new', { posts });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error loading posts");
+    }
 });
 
 app.get('/admin', async (req, res) => {
@@ -63,7 +77,15 @@ app.get('/home-user/:username', async (req, res) => {
             return res.redirect('/login');
         }
 
-        res.render('home-user', { userInfo });
+        const sql_posts = `
+        SELECT posts.id, posts.title, users.username
+        FROM posts
+        JOIN users ON posts.user_id = users.id
+        ORDER BY posts.created_at DESC`;
+
+        const [posts] = await pool.query(sql_posts);
+
+        res.render('home-user', { userInfo, posts });
     } catch (err) {
         console.error('Error fetching user for dashboard:', err);
         res.status(500).send('Internal Server Error');
@@ -86,10 +108,17 @@ app.post('/login', async (req, res) => {
         const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
         const [rows] = await pool.execute(sql, [username, password]);
 
+        const sql_posts = `
+            SELECT posts.id, posts.title, users.username
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            ORDER BY posts.created_at DESC`;
+        const [posts] = await pool.query(sql_posts);
+
         if (rows.length > 0) {
             const userInfo = rows[0];
             currentUser = userInfo;
-            res.render('home-user', { userInfo });
+            res.render('home-user', { userInfo, posts });
         } else {
             res.redirect('/login?error=true');
         }
@@ -97,6 +126,11 @@ app.post('/login', async (req, res) => {
         console.error('Login Error:', err);
         res.status(500).send('Database error');
     }
+});
+
+app.get('/logout', (req, res) => {
+    currentUser = null;
+    res.redirect('/');
 });
 
 /*========= Settings Routes ============*/

@@ -48,3 +48,27 @@ li{
     flex-direction: column;
     justify-content: end;
 }
+
+/* Post Cards */
+.posts{
+    width: 95%;
+    padding-top: 2rem;
+}
+
+.post-card{
+    display:block;
+    background:white;
+    padding:1rem;
+    border-radius:.5rem;
+    color:black;
+}
+
+.post-user{
+    font-size:1rem;
+    color:#ffac30;
+    margin-top:.25rem;
+}
+
+.post-card:hover{
+    background:#f5f5f5;
+}
