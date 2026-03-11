@@ -59,51 +59,56 @@ app.get('/login', (req,res) => {
 });
 
 /*========= Settings Routes ============*/
-app.get('/settings', async (req, res) => {
-    try {
-        const [rows] = await pool.query('SELECT * FROM users ORDER BY timestamp DESC LIMIT 1');
-        
-        if (rows.length === 0) {
-            return res.redirect('/create-account');
-        }
+app.get('/settings', (req, res) => {
+    const userInfo = users[users.length -1];
 
-        res.render('settings', { userInfo: rows[0] });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Error loading settings');
-    }
+    res.render('settings', { userInfo });
 });
 
-// UPDATE USER (POST)
-app.post('/update-settings', async (req, res) => {
-    try {
-        const { username, email, password } = req.body;
-        
-        const [lastUser] = await pool.query('SELECT id FROM users ORDER BY timestamp DESC LIMIT 1');
-        const userId = lastUser[0].id;
+// app.post('/update-settings', (req, res) => {
+//     const { username, email, password } = req.body;
 
-        const sql = `UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?`;
-        await pool.execute(sql, [username, email, password, userId]);
+//     if (password) {
+//         console.log(`Updating Name to: ${username}, Email to: ${email}, and setting a NEW password.`);
+//     } else {
+//         console.log(`Updating Name to: ${username}, Email to: ${email}, keeping OLD password.`);
+//     }
 
-        res.redirect('/settings');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Error updating account');
+//     res.redirect('/settings', {userInfo}); 
+// });
+
+app.post('/update-settings', (req, res) => {
+    if (!currentUser) {
+        return res.redirect('/login');
     }
+
+    const { username, email, password } = req.body;
+
+    // update only if field was filled in
+    if (username && username.trim() !== "") {
+        currentUser.username = username;
+    }
+
+    if (email && email.trim() !== "") {
+        currentUser.email = email;
+    }
+
+    if (password && password.trim() !== "") {
+        currentUser.password = password;
+    }
+
+    // update timestamp
+    currentUser.timestamp = new Date();
+
+    console.log("Updated user:", currentUser);
+
+    res.redirect('/settings');
 });
 
-// DELETE USER (POST)
-app.post('/delete-account', async (req, res) => {
-    try {
-        const [lastUser] = await pool.query('SELECT id FROM users ORDER BY timestamp DESC LIMIT 1');
-        if (lastUser.length > 0) {
-            await pool.execute('DELETE FROM users WHERE id = ?', [lastUser[0].id]);
-        }
-        res.redirect('/');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Error deleting account');
-    }
+app.post('/delete-account', (req, res) => {
+    console.log("Account deletion request received.");
+
+    res.redirect('/'); 
 });
 
 /*========= Listener ============*/
