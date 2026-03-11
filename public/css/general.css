@@ -27,8 +27,12 @@ nav{
 #nav-right{
     display: flex;
     align-items: end;
-    margin-left:auto;
+    margin-left: auto;
     padding: 2rem;
+}
+
+#nav-right > a {
+    margin-right: 15px;
 }
 
 /* Other */

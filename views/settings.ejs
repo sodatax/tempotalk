@@ -16,6 +16,7 @@
             <img src="/images/tempotalk_logo_white.png" alt="tempotalk logo" id="logo">
         </a>
         <div id="nav-right">
+            <a href="/home-user"><strong>Home</strong></a>
             <a href="/settings"><strong> <%= userInfo.username %></strong></a>
         </div>
     </nav>
@@ -31,7 +32,7 @@
         <% } %> 
     </p>
     <p>Email Address: <%= userInfo.email %> </p>
-    <p>Account Created: <%= userInfo.timestamp.toLocaleString() %></p>
+    <p>Account Created: <%= new Date().toLocaleString() %></p>
 
     <h3>Change Your Info</h3>
 
