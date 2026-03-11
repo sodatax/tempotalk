@@ -18,9 +18,14 @@
     <%- include('partials/nav-new') %>
 
     <!-- content -->
-    <form id="account-creation" action="/in-account" method="POST">
+    <form id="account-creation" action="/login" method="POST">
         <h2>Log in to your account</h2>
         <br>
+        <% if (locals.error) { %>
+            <p class="auth-error">
+                <%= error %>
+            </p>
+        <% } %>
         <label for="username">Username:
             <span class="err" id="err-username">
                 *username is required*

@@ -73,8 +73,27 @@ app.get('/create-account', (req,res) => {
     res.render('create-account');
 });
 
-app.get('/login', (req,res) => {
-    res.render('login');
+app.get('/login', (req, res) => {
+    const errorMsg = req.query.error ? 'Invalid username or password.' : null;
+    res.render('login', { error: errorMsg });
+});
+
+app.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
+        const [rows] = await pool.execute(sql, [username, password]);
+
+        if (rows.length > 0) {
+            const userInfo = rows[0];
+            res.render('home-user', { userInfo });
+        } else {
+            res.redirect('/login?error=true');
+        }
+    } catch (err) {
+        console.error('Login Error:', err);
+        res.status(500).send('Database error');
+    }
 });
 
 /*========= Settings Routes ============*/
