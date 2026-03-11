@@ -23,6 +23,16 @@ const pool = mysql2.createPool({
     port: process.env.DB_PORT
 }).promise();
 
+app.get('/db-test', async (req, res) => {
+    try {
+        const users = await pool.query('SELECT * FROM users');
+        res.send(users[0]);
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).send('Database error: ' + err.message);
+    }
+});
+
 /*========= Variables =========*/
 const users = [];
 let currentUser= null;
@@ -30,6 +40,16 @@ let currentUser= null;
 /*========= Home Page Routes ============*/
 app.get('/', (req,res) => {
     res.render('home-new');
+});
+
+app.get('/admin', async (req, res) => {
+    try {
+        const [users] = await pool.query('SELECT * FROM users ORDER BY timestamp DESC');
+        res.render('admin', { users });
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).send('Error loading users: ' + err.message);
+    }
 });
 
 app.post('/home-user', async (req, res) => {

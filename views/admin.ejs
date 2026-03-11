@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--script section-->
+    <script src = "https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src = "https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
+    <!--css section-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.css">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <table id = "users-table" class = "display"> 
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Password</th>
+                <th>Email</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.username %></td>
+                    <td><%= user.password %></td>
+                    <td><%= user.email %></td>
+                    <td><%= new Date(user.timestamp).toLocaleString() %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+
+    </table>
+    <script defer>
+        let table = new DataTable('#users-table');
+    </script>
+</body>
+</html>
