@@ -34,7 +34,6 @@ app.get('/db-test', async (req, res) => {
 });
 
 /*========= Variables =========*/
-const users = [];
 let currentUser= null;
 
 /*========= Home Page Routes ============*/
@@ -52,19 +51,22 @@ app.get('/admin', async (req, res) => {
     }
 });
 
-app.get('/home-user', async (req, res) => {
+app.get('/home-user/:username', async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT * FROM users ORDER BY id DESC LIMIT 1');
+        const targetName = req.params.username;
+
+        const sql = 'SELECT * FROM users WHERE username = ?';
+        const [rows] = await pool.query(sql, [targetName]);
         const userInfo = rows[0];
 
         if (!userInfo) {
-            return res.redirect('/create-account');
+            return res.redirect('/login');
         }
 
         res.render('home-user', { userInfo });
     } catch (err) {
-        console.error('Error:', err);
-        res.status(500).send('Error loading dashboard');
+        console.error('Error fetching user for dashboard:', err);
+        res.status(500).send('Internal Server Error');
     }
 });
 
@@ -97,17 +99,21 @@ app.post('/login', async (req, res) => {
 });
 
 /*========= Settings Routes ============*/
-app.get('/settings', async (req, res) => {
+// Add :id to the path
+app.get('/settings/:id', async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT * FROM users ORDER BY id DESC LIMIT 1');
+        const userId = req.params.id;
+        
+        const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [userId]);
         const userInfo = rows[0];
 
         if (!userInfo) {
-            return res.redirect('/create-account');
+            return res.redirect('/login');
         }
 
         res.render('settings', { userInfo });
     } catch (err) {
+        console.error(err);
         res.status(500).send("Error loading settings");
     }
 });
