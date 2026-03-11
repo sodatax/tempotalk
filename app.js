@@ -65,17 +65,17 @@ app.get('/settings', (req, res) => {
     res.render('settings', { userInfo });
 });
 
-// app.post('/update-settings', (req, res) => {
-//     const { username, email, password } = req.body;
+app.post('/in-account', (req, res) => {
+    const account = {
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email ? req.body.email : "check email in settings"
+    };
 
-//     if (password) {
-//         console.log(`Updating Name to: ${username}, Email to: ${email}, and setting a NEW password.`);
-//     } else {
-//         console.log(`Updating Name to: ${username}, Email to: ${email}, keeping OLD password.`);
-//     }
+    users.push(account);
 
-//     res.redirect('/settings', {userInfo}); 
-// });
+    res.render('account-summary', { account })
+});
 
 app.post('/update-settings', (req, res) => {
     if (!currentUser) {
