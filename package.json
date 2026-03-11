@@ -19,9 +19,11 @@
   },
   "homepage": "https://github.com/sodatax/tempotalk#readme",
   "dependencies": {
+    "dotenv": "^17.3.1",
     "ej": "^1.0.4",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
+    "mysql2": "^3.19.1",
     "nano": "^11.0.4"
   },
   "devDependencies": {
