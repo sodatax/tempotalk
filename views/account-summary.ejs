@@ -8,20 +8,13 @@
     <link rel="stylesheet" href="/css/summary.css">
 </head>
 <body>
-    <nav>
-        <a href="/home-user" class="crop-logo">
-            <img src="/images/tempotalk_logo_white.png" alt="tempotalk logo" id="logo">
-        </a>
-        <div id="nav-right">
-            <a href="/home-user"><strong><%= account.username %></strong></a>
-            <a href="/settings"><strong>Settings</strong></a>
-        </div>
-    </nav>
+    <%- include('partials/nav-user', { userInfo: userInfo }) %>
+
     <div>
         <h1>Welcome in, here's your account information</h1>
-        <h2>Username: <%= account.username %></h2>
-        <h2>Password: <%= account.password %></h2>
-        <h2>Email: <%= account.email %></h2>
+        <h2>Username: <%= userInfo.username %></h2>
+        <h2>Password: <%= userInfo.password %></h2>
+        <h2>Email: <%= userInfo.email %></h2>
         <a href="/home-user">Confirm</a>
     </div>
 </body>

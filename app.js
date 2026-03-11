@@ -52,20 +52,19 @@ app.get('/admin', async (req, res) => {
     }
 });
 
-app.post('/home-user', async (req, res) => {
+app.get('/home-user', async (req, res) => {
     try {
-        const { username, password, email } = req.body;
-
-        const sql = `INSERT INTO users (username, password, email) VALUES (?, ?, ?)`;
-        const [result] = await pool.execute(sql, [username, password, email]);
-
-        const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [result.insertId]);
+        const [rows] = await pool.query('SELECT * FROM users ORDER BY id DESC LIMIT 1');
         const userInfo = rows[0];
+
+        if (!userInfo) {
+            return res.redirect('/create-account');
+        }
 
         res.render('home-user', { userInfo });
     } catch (err) {
-        console.error('Database Error:', err);
-        res.status(500).send('Error creating account');
+        console.error('Error:', err);
+        res.status(500).send('Error loading dashboard');
     }
 });
 
@@ -79,22 +78,36 @@ app.get('/login', (req,res) => {
 });
 
 /*========= Settings Routes ============*/
-app.get('/settings', (req, res) => {
-    const userInfo = users[users.length -1];
+app.get('/settings', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM users ORDER BY id DESC LIMIT 1');
+        const userInfo = rows[0];
 
-    res.render('settings', { userInfo });
+        if (!userInfo) {
+            return res.redirect('/create-account');
+        }
+
+        res.render('settings', { userInfo });
+    } catch (err) {
+        res.status(500).send("Error loading settings");
+    }
 });
 
-app.post('/in-account', (req, res) => {
-    const account = {
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email ? req.body.email : "check email in settings"
-    };
+app.post('/in-account', async (req, res) => {
+    try {
+        const { username, password, email } = req.body;
 
-    users.push(account);
+        const sql = `INSERT INTO users (username, password, email) VALUES (?, ?, ?)`;
+        const [result] = await pool.execute(sql, [username, password, email]);
 
-    res.render('account-summary', { account })
+        const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [result.insertId]);
+        const userInfo = rows[0];
+
+        res.render('account-summary', { userInfo });
+    } catch (err) {
+        console.error('Database Error:', err);
+        res.status(500).send('Error creating account in database');
+    }
 });
 
 app.post('/update-settings', (req, res) => {

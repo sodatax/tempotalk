@@ -12,15 +12,7 @@
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav>
-        <a href="/home-user" class="crop-logo">
-            <img src="/images/tempotalk_logo_white.png" alt="tempotalk logo" id="logo">
-        </a>
-        <div id="nav-right">
-            <a href="/home-user"><strong><%= userInfo.username %></strong></a>
-            <a href="/settings"><strong>Settings</strong></a>
-        </div>
-    </nav>
+    <%- include('partials/nav-user', { userInfo: userInfo }) %>
     
     <div class="layout-container">
         <div class="column" id="column-left">
@@ -35,8 +27,6 @@
         </div>
 
         <div class="column" id="column-right">
-            <a href="/settings">Account Settings</a>
-            <a href="/" class="bottom-right">Log Out</a>
         </div>
     </div>
 </body>

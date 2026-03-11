@@ -11,15 +11,7 @@
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav>
-        <a href="/home-user" class="crop-logo">
-            <img src="/images/tempotalk_logo_white.png" alt="tempotalk logo" id="logo">
-        </a>
-        <div id="nav-right">
-            <a href="/home-user"><strong>Home</strong></a>
-            <a href="/settings"><strong> <%= userInfo.username %></strong></a>
-        </div>
-    </nav>
+    <%- include('partials/nav-user', { userInfo: userInfo }) %>
 
     <main class="settings-card">
     <h2>Account Settings</h2>
@@ -32,7 +24,7 @@
         <% } %> 
     </p>
     <p>Email Address: <%= userInfo.email %> </p>
-    <p>Account Created: <%= new Date().toLocaleString() %></p>
+    <p>Account Created: <%= new Date(userInfo.timestamp).toLocaleString() %></p>
 
     <h3>Change Your Info</h3>
 
