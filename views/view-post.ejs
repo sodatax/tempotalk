@@ -20,8 +20,6 @@
         <%- include('partials/nav-user') %>
     <% } %>
 
-    <!-- NOTE: MAKE NAV IF STATEMENT FOR NAV BAR > if(user) then nav-user, else nav-new -->
-
     <div class="layout-container">
         <div class="column" id="column-left">
             <% if (userInfo) { %>
@@ -32,20 +30,22 @@
         </div>
 
     <div class="column" id="column-middle">
-        <h1><%= post.title %></h1>
-        <p>
-            Posted by <strong><%= post.username %></strong>
-            • <%= new Date(post.created_at).toLocaleString() %>
-        </p>
-        <p><%= post.content %></p>
-        <% if (post.links) { %>
+        <div class="post">
+            <h1 id="title"><%= post.title %></h1>
             <p>
-                Link:
-                <a href="<%= post.links %>" target="_blank">
-                    <%= post.links %>
-                </a>
+                Posted by <strong><%= post.username %></strong>
+                • <%= new Date(post.created_at).toLocaleString() %>
             </p>
-        <% } %>
+            <p><%= post.content %></p>
+            <% if (post.links) { %>
+                <p>
+                    Link:
+                    <a href="<%= post.links %>" target="_blank">
+                        <%= post.links %>
+                    </a>
+                </p>
+            <% } %>
+        </div>
     </div>
 
         <div class="column" id="column-right">
