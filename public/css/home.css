@@ -53,6 +53,9 @@ li{
 .posts{
     width: 95%;
     padding-top: 2rem;
+    display:flex;
+    flex-direction: column;
+    gap:1rem;
 }
 
 .post-card{
@@ -67,6 +70,10 @@ li{
     font-size:1rem;
     color:#ffac30;
     margin-top:.25rem;
+}
+
+#new-post{
+
 }
 
 .post-card:hover{
