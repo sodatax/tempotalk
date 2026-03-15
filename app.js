@@ -2,6 +2,7 @@ import express from 'express';
 import mysql2 from 'mysql2';
 import dotenv from 'dotenv';
 import {validateNewAccount} from './validation.js';
+import {validateAccount} from './validation.js';
 
 dotenv.config();
 
@@ -105,7 +106,18 @@ app.get('/login', (req, res) => {
 
 app.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
+
+        const accountData = req.body;
+
+        const valid = validateAccount(accountData);
+        if (!valid.isValid) {
+            res.render('login', {errors: valid.errors});
+            return;
+        }
+
+        const username = accountData.username || null;
+        const password = accountData.password || null;
+
         const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
         const [rows] = await pool.execute(sql, [username, password]);
 

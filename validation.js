@@ -34,3 +34,24 @@ export function validateNewAccount(data) {
         errors
     };
 }
+
+export function validateAccount(data) {
+    console.log(data);
+
+    const errors = [];
+
+    if (data.username == "") {
+        errors.push("Please type in your username");
+    }
+
+    if (data.password == "") {
+        errors.push("Please type in your password");
+    }
+
+    console.log(errors);
+
+    return {
+        isValid: errors.length === 0,
+        errors
+    };
+}

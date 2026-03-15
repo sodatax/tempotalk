@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="/images/tempotalk_logo_white.png">
 
     <!-- Scripts -->
-    <script src="js/login.js" defer></script>
+    <!-- <script src="js/login.js" defer></script> -->
     
 </head>
 <body>
@@ -20,6 +20,13 @@
 
     <!-- content -->
     <form id="account-creation" action="/login" method="POST">
+
+        <% if (typeof errors != 'undefined') { %>
+            <% errors.forEach(error => { %>
+                <p><%= error %></p>
+            <% }); %>
+        <% } %>
+
         <h2>Log in to your account</h2>
         <br>
         <% if (locals.error) { %>
