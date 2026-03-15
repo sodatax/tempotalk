@@ -1,6 +1,7 @@
 import express from 'express';
 import mysql2 from 'mysql2';
 import dotenv from 'dotenv';
+import {validateNewAccount} from './validation.js';
 
 dotenv.config();
 
@@ -155,7 +156,18 @@ app.get('/settings/:id', async (req, res) => {
 
 app.post('/in-account', async (req, res) => {
     try {
-        const { username, password, email } = req.body;
+        
+        const accountData = req.body;
+
+        const valid = validateNewAccount(accountData);
+        if (!valid.isValid) {
+            res.render('create-account', {errors: valid.errors});
+            return;
+        }
+
+        const username = accountData.username || null;
+        const password = accountData.password || null;
+        const email = accountData.email || null;
 
         const sql = `INSERT INTO users (username, password, email) VALUES (?, ?, ?)`;
         const [result] = await pool.execute(sql, [username, password, email]);
