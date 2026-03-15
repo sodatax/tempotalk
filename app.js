@@ -262,6 +262,29 @@ app.get('/post/:id', async (req, res) => {
     }
 });
 
+app.post("/delete-post/:id", async (req, res) => {
+    try {
+        if (!currentUser) {
+            return res.redirect("/login");
+        }
+
+        const postId = req.params.id;
+
+        const sql = `
+        DELETE FROM posts
+        WHERE id = ? AND user_id = ?
+        `;
+
+        await pool.execute(sql, [postId, currentUser.id]);
+
+        res.redirect(`/home-user/${currentUser.username}`);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error deleting post");
+    }
+});
+
 /*========= Listener ============*/
 app.listen(PORT, () =>{
     console.log(`Server is running on port http://localhost:${PORT}`);

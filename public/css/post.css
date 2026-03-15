@@ -17,3 +17,16 @@
 p{
     padding: 1rem;
 }
+
+#column-left, #column-right{
+    display: flex;
+    flex-direction: column;
+}
+
+#delete-post{
+    all:unset;
+}
+
+#delete-post:hover{
+    color:grey;
+}
