@@ -50,7 +50,11 @@
 
         <div class="column" id="column-right">
             <div>
-
+                <% if (userInfo?.id === post.user_id) { %>
+                    <form action="/delete-post/<%= post.id %>" method="POST">
+                        <button id="delete-post" type="submit">Delete Post</button>
+                    </form>
+                <% } %>
             </div>
         </div>
     </div>
