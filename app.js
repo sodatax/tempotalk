@@ -232,8 +232,25 @@ app.post('/update-settings', (req, res) => {
     res.redirect('/settings');
 });
 
-app.post('/delete-account', (req, res) => {
-    console.log("Account deletion request received.");
+app.post('/delete-account', async(req, res) => {
+    try {
+        if (!currentUser) {
+            return res.redirect('/login');
+        }
+
+        const userId = currentUser.id;
+
+        const sql = `DELETE FROM users WHERE id = ?`;
+        await pool.execute(sql, [userId]);
+
+        currentUser = null;
+
+        res.redirect('/');
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error deleting account");
+    }
 
     res.redirect('/'); 
 });
