@@ -25,6 +25,12 @@
 
         <div class="column" id="column-middle">
             <form id="create-post-form" action="/in-post" method="POST">
+                <% if (typeof errors != 'undefined') { %>
+                    <% errors.forEach(error => { %>
+                        <p><%= error %></p>
+                    <% }); %>
+                <% } %>
+                
                 <label for="title">Title:
                     <span class="err" id="err-title">
                         *title is required*
@@ -32,20 +38,12 @@
                 </label>
                 <input type="text" id="title" name="title" placeholder="Title...">
                 <br>
-                <!-- <label for="tag">Tag:</label>
-                <select id="tag" name="tag">
-                    <option value="none">Select a Tag</option>
-                    <option value="music-sharing">Music Sharing</option>
-                    <option value="my-music">My Music</option>
-                    <option value="discussion">Discussion</option>
-                </select>
-                <br> -->
                 <label for="body-text">Body Text:
                     <span class="err" id="err-body">
                         *body text is required*
                     </span>
                 </label>
-                <textarea id="body-text" name="body-text" rows="8" placeholder="Body Text..."></textarea>
+                <textarea id="body-text" name="bodyText" rows="8" placeholder="Body Text..."></textarea>
                 <br>
                 <!-- Will make this link potentially pull from an API for a music player -->
                 <label for="link">Music Link:</label>

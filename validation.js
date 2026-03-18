@@ -55,3 +55,25 @@ export function validateAccount(data) {
         errors
     };
 }
+
+export function validatePost(data){
+    console.log(data);
+
+    const errors = [];
+    
+    if (!data.title || data.title.trim() === "") {
+        errors.push("*title is required*");
+    }
+
+    if (!data.bodyText || data.bodyText.trim() === "") {
+        errors.push("*body text is required*");
+    }
+
+    console.log(errors);
+
+    return {
+        isValid: errors.length === 0,
+        errors
+    };
+    
+}

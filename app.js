@@ -3,6 +3,7 @@ import mysql2 from 'mysql2';
 import dotenv from 'dotenv';
 import {validateNewAccount} from './validation.js';
 import {validateAccount} from './validation.js';
+import {validatePost} from './validation.js';
 
 dotenv.config();
 
@@ -181,6 +182,15 @@ app.post('/in-account', async (req, res) => {
         const password = accountData.password || null;
         const email = accountData.email || null;
 
+        const checkSql = `SELECT * FROM users WHERE username = ?`;
+        const [existingUsers] = await pool.execute(checkSql, [username]);
+
+        if (existingUsers.length > 0) {
+            return res.render('create-account', {
+                errors: ["Username is already taken"]
+            });
+        }
+
         const sql = `INSERT INTO users (username, password, email) VALUES (?, ?, ?)`;
         const [result] = await pool.execute(sql, [username, password, email]);
 
@@ -243,9 +253,23 @@ app.post('/in-post', async (req, res) => {
             return res.redirect('/login');
         }
 
-        const { title, link } = req.body;
-        const content = req.body["body-text"];
+        const { title, bodyText, link } = req.body;
+
+        const validated = validatePost({
+            title,
+            bodyText
+        });
+
+        if (!validated.isValid) {
+            return res.render('create-post', {
+                errors: validated.errors,
+                data: req.body,
+                userInfo: currentUser
+            });
+        }
+
         const user_id = currentUser.id;
+        const content = bodyText;
 
         const sql = `INSERT INTO posts (user_id, title, content, links) VALUES (?, ?, ?, ?)`;
         const [result] = await pool.execute(sql, [user_id, title, content, link]);
