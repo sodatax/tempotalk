@@ -100,6 +100,45 @@ app.get('/create-account', (req,res) => {
     res.render('create-account');
 });
 
+app.post('/in-account', async (req, res) => {
+    try {
+        
+        const accountData = req.body;
+
+        const valid = validateNewAccount(accountData);
+        if (!valid.isValid) {
+            res.render('create-account', {errors: valid.errors});
+            return;
+        }
+
+        const username = accountData.username || null;
+        const password = accountData.password || null;
+        const email = accountData.email || null;
+
+        const checkSql = `SELECT * FROM users WHERE username = ?`;
+        const [existingUsers] = await pool.execute(checkSql, [username]);
+
+        if (existingUsers.length > 0) {
+            return res.render('create-account', {
+                errors: ["Username is already taken"]
+            });
+        }
+
+        const sql = `INSERT INTO users (username, password, email) VALUES (?, ?, ?)`;
+        const [result] = await pool.execute(sql, [username, password, email]);
+
+        const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [result.insertId]);
+        const userInfo = rows[0];
+        
+        currentUser = userInfo;
+
+        res.render('account-summary', { userInfo });
+    } catch (err) {
+        console.error('Database Error:', err);
+        res.status(500).send('Error creating account in database');
+    }
+});
+
 app.get('/login', (req, res) => {
     const errorMsg = req.query.error ? 'Invalid username or password.' : null;
     res.render('login', { error: errorMsg });
@@ -167,64 +206,18 @@ app.get('/settings/:id', async (req, res) => {
     }
 });
 
-app.post('/in-account', async (req, res) => {
-    try {
-        
-        const accountData = req.body;
-
-        const valid = validateNewAccount(accountData);
-        if (!valid.isValid) {
-            res.render('create-account', {errors: valid.errors});
-            return;
-        }
-
-        const username = accountData.username || null;
-        const password = accountData.password || null;
-        const email = accountData.email || null;
-
-        const checkSql = `SELECT * FROM users WHERE username = ?`;
-        const [existingUsers] = await pool.execute(checkSql, [username]);
-
-        if (existingUsers.length > 0) {
-            return res.render('create-account', {
-                errors: ["Username is already taken"]
-            });
-        }
-
-        const sql = `INSERT INTO users (username, password, email) VALUES (?, ?, ?)`;
-        const [result] = await pool.execute(sql, [username, password, email]);
-
-        const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [result.insertId]);
-        const userInfo = rows[0];
-        
-        currentUser = userInfo;
-
-        res.render('account-summary', { userInfo });
-    } catch (err) {
-        console.error('Database Error:', err);
-        res.status(500).send('Error creating account in database');
-    }
-});
-
 app.post('/update-settings', async (req, res) => {
     if (!currentUser) {
         return res.redirect('/login');
     }
 
-    const newAccountData = req.body;
+    console.log("REQ BODY:", req.body);
+    
+    const { username, email, password } = req.body;
 
-    const username = newAccountData.username || null;
-    const password = newAccountData.password || null;
-    const email = newAccountData.email || null;
-
-    const checkSql = `SELECT * FROM users WHERE username = ?`;
-    const [existingUsers] = await pool.execute(checkSql, [username]);
-
-    if (existingUsers.length > 0) {
-        return res.render('settings', {
-            errors: ["Username is already taken"]
-        });
-    }
+    let newUsername = currentUser.username;
+    let newEmail = currentUser.email;
+    let newPassword = currentUser.password;
 
     // update only if field was filled in
     if (username && username.trim() !== "") {
@@ -239,12 +232,44 @@ app.post('/update-settings', async (req, res) => {
         currentUser.password = password;
     }
 
-    // update timestamp
-    currentUser.timestamp = new Date();
+    //checks if username is taken
+    if (newUsername !== currentUser.username) {
+    const [existing] = await pool.execute(
+        'SELECT id FROM users WHERE username = ?',
+        [newUsername]
+    );
+
+        if (existing.length > 0) {
+            return res.render('settings', {
+                userInfo: currentUser,
+                errors: ["Username is already taken"]
+            });
+        }
+    }
+
+    //updates settings in the db
+    const sql = `
+        UPDATE users
+        SET username = ?, email = ?, password = ?, timestamp = NOW()
+        WHERE id = ?
+    `;
+
+    await pool.execute(sql, [
+        newUsername,
+        newEmail,
+        newPassword,
+        currentUser.id
+    ]);
+
+    //updates the currentUser to the new settings
+    currentUser.username = newUsername;
+    currentUser.email = newEmail;
+    currentUser.password = newPassword;
 
     console.log("Updated user:", currentUser);
 
-    res.redirect('/settings');
+    res.redirect(`/settings/${currentUser.id}`);
+
 });
 
 app.post('/delete-account', async(req, res) => {
