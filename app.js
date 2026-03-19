@@ -196,6 +196,8 @@ app.post('/in-account', async (req, res) => {
 
         const [rows] = await pool.query('SELECT * FROM users WHERE id = ?', [result.insertId]);
         const userInfo = rows[0];
+        
+        currentUser = userInfo;
 
         res.render('account-summary', { userInfo });
     } catch (err) {
