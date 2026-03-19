@@ -221,15 +221,15 @@ app.post('/update-settings', async (req, res) => {
 
     // update only if field was filled in
     if (username && username.trim() !== "") {
-        currentUser.username = username;
+        newUsername = username;
     }
 
     if (email && email.trim() !== "") {
-        currentUser.email = email;
+        newEmail = email;
     }
 
     if (password && password.trim() !== "") {
-        currentUser.password = password;
+        newPassword = password;
     }
 
     //checks if username is taken
