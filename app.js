@@ -206,12 +206,25 @@ app.post('/in-account', async (req, res) => {
     }
 });
 
-app.post('/update-settings', (req, res) => {
+app.post('/update-settings', async (req, res) => {
     if (!currentUser) {
         return res.redirect('/login');
     }
 
-    const { username, email, password } = req.body;
+    const newAccountData = req.body;
+
+    const username = newAccountData.username || null;
+    const password = newAccountData.password || null;
+    const email = newAccountData.email || null;
+
+    const checkSql = `SELECT * FROM users WHERE username = ?`;
+    const [existingUsers] = await pool.execute(checkSql, [username]);
+
+    if (existingUsers.length > 0) {
+        return res.render('settings', {
+            errors: ["Username is already taken"]
+        });
+    }
 
     // update only if field was filled in
     if (username && username.trim() !== "") {

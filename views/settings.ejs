@@ -30,6 +30,13 @@
     <h3>Change Your Info</h3>
 
     <form id="account-creation" action="/update-settings" method="POST">
+
+        <% if (typeof errors != 'undefined') { %>
+            <% errors.forEach(error => { %>
+                <p><%= error %></p>
+            <% }); %>
+        <% } %>
+
         <div class="input-group">
             <label for="username">Name</label>
             <input type="text" id="username" name="username" placeholder="User" onfocus="this.select()">
