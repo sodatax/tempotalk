@@ -9,6 +9,7 @@ dotenv.config();
 
 const app = express();
 
+// make sure to use express public
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
@@ -26,6 +27,7 @@ const pool = mysql2.createPool({
     port: process.env.DB_PORT
 }).promise();
 
+// This grabs the sql database
 app.get('/db-test', async (req, res) => {
     try {
         const users = await pool.query('SELECT * FROM users');
@@ -58,8 +60,11 @@ app.get('/', async (req, res) => {
     }
 });
 
+// This grabs the data into the admin page/table
 app.get('/admin', async (req, res) => {
     try {
+
+        // This displays all the users
         const [users] = await pool.query('SELECT * FROM users ORDER BY timestamp DESC');
         res.render('admin', { users });
     } catch (err) {
@@ -68,6 +73,7 @@ app.get('/admin', async (req, res) => {
     }
 });
 
+// This is to help each user have a specialized dashboard
 app.get('/home-user/:username', async (req, res) => {
     try {
         const targetName = req.params.username;
@@ -105,7 +111,7 @@ app.post('/in-account', async (req, res) => {
         
         const accountData = req.body;
 
-        const valid = validateNewAccount(accountData);
+        const valid = validateNewAccount(accountData); // Validation logic added
         if (!valid.isValid) {
             res.render('create-account', {errors: valid.errors});
             return;
@@ -115,6 +121,7 @@ app.post('/in-account', async (req, res) => {
         const password = accountData.password || null;
         const email = accountData.email || null;
 
+        // Username check
         const checkSql = `SELECT * FROM users WHERE username = ?`;
         const [existingUsers] = await pool.execute(checkSql, [username]);
 
@@ -370,7 +377,7 @@ app.get('/post/:id', async (req, res) => {
 app.post("/delete-post/:id", async (req, res) => {
     try {
         if (!currentUser) {
-            return res.redirect("/login");
+            return res.redirect("/login"); // This verifies if the post belongs to the user before it deletes
         }
 
         const postId = req.params.id;
