@@ -165,7 +165,7 @@ http://localhost:3004
 * Improve UI/UX (error styling, responsiveness)
 * Mobile-friendly design
 * Add search and filtering for posts
-* Add the ability to post with pictures
+* Add the ability to post with audio and/or picture uploads
 * Embed a music player for posts linking to sites such as Spotify, Soundcloud, Apple Music, etc.
 * Add the ability for users with accounts to like, dislike, and comment on posts
 
